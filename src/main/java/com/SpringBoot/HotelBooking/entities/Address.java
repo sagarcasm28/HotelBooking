@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "address")
 public class Address {
@@ -14,11 +16,20 @@ public class Address {
 	@Column(name = "id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
 	
 	@Column(name = "city")
 	private String city;
 	
+
+	@Column(name = "country")
+	private String country;
+	
+	@Column(name = "street")
+	private String street;
+	
+	@JsonIgnore
 	public Long getId() {
 		return id;
 	}
@@ -51,9 +62,4 @@ public class Address {
 		this.street = street;
 	}
 
-	@Column(name = "country")
-	private String country;
-	
-	@Column(name = "street")
-	private String street;
 }

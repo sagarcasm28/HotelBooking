@@ -25,6 +25,8 @@ public class Customer {
 	@Column(name = "Gender")
 	private String gender;
 	//private Long[] addressId;
+	@Column(name = "address_id")
+	private Long addressId;
 
 	public Long getId() {
 		return id;
@@ -64,6 +66,14 @@ public class Customer {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public Long getAddressId() {
+		return addressId;
+	}
+
+	public void setAddressId(Long addressId) {
+		this.addressId = addressId;
 	}
 
 }
