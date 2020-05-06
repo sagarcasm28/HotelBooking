@@ -37,6 +37,13 @@ public class Hotel {
 	@Column(name = "to_date")
 	private Date toDate;
 	
+	@Column(name = "facilities")
+	@JsonIgnore
+	private Long facilites;
+	
+	@JsonProperty("facilities")
+    private transient List<Facility> facilityList;
+	
 	public Long getHotelId() {
 		return hotelId;
 	}
@@ -100,16 +107,4 @@ public class Hotel {
 	public void setFacilityList(List<Facility> facilityList) {
 		this.facilityList = facilityList;
 	}
-
-	@Column(name = "facilities")
-	@JsonIgnore
-	private Long facilites;
-	
-	@JsonProperty("facilities")
-    private transient List<Facility> facilityList;
-	
-	
-	
-	
-	
 }

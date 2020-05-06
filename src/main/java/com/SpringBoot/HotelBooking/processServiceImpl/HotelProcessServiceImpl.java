@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.SpringBoot.HotelBooking.entities.Facility;
 import com.SpringBoot.HotelBooking.entities.Hotel;
 import com.SpringBoot.HotelBooking.processService.HotelProcessService;
+import com.SpringBoot.HotelBooking.service.FacilityService;
 import com.SpringBoot.HotelBooking.service.HotelService;
 
 @Service
@@ -16,22 +18,33 @@ public class HotelProcessServiceImpl implements HotelProcessService {
 
 	private HotelService hotelService;
 
+	private FacilityService facilityService;
+
 	@Autowired
-	public HotelProcessServiceImpl(HotelService hotelService) {
+	public HotelProcessServiceImpl(HotelService hotelService, FacilityService facilityService) {
 		this.hotelService = hotelService;
+		this.facilityService = facilityService;
 	}
 
 	@Override
 	public ResponseEntity fetchHotel(Long hotelId) {
 		// TODO Auto-generated method stub
-		return new ResponseEntity(hotelService.fetchHotel(hotelId), HttpStatus.OK);
+		Hotel hotel = hotelService.fetchHotel(hotelId);
+		List<Facility> facilityList = facilityService.getFacilities(hotel.getFacilites());
+		hotel.setFacilityList(facilityList);
+		return new ResponseEntity(hotel, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity fetchHoteList() {
 		// TODO Auto-generated method stub
 		List<Hotel> hotelList = hotelService.fetchHoteList();
-	   return new ResponseEntity(hotelList, HttpStatus.OK);
+		
+		for(Hotel hotel: hotelList) {
+			List<Facility> facilityList = facilityService.getFacilities(hotel.getFacilites());
+			hotel.setFacilityList(facilityList);
+		}
+		return new ResponseEntity(hotelList, HttpStatus.OK);
 	}
 
 }
